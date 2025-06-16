@@ -1,15 +1,9 @@
 export function mergeSort(array) {
   if (array.length === 0 || array.length === 1) return array;
   else {
-    let leftHalf;
-    let rightHalf;
-    if (array.length % 2 === 0) {
-      leftHalf = array.slice(0, array.length / 2);
-      rightHalf = array.slice(array.length / 2, array.length);
-    } else {
-      leftHalf = array.slice(0, (array.length - 1) / 2);
-      rightHalf = array.slice((array.length - 1) / 2, array.length);
-    }
+    let midpoint = Math.floor(array.length / 2);
+    let leftHalf = array.slice(0, midpoint);
+    let rightHalf = array.slice(midpoint, array.length);
 
     let leftHalfSorted = mergeSort(leftHalf);
     let rightHalfSorted = mergeSort(rightHalf);
