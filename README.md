@@ -1,1 +1,1 @@
-# odin-binary-search-trees
+The purpose of this mini-project is to build a balanced binary search tree.
