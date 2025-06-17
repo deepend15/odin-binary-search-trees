@@ -1,4 +1,4 @@
-function mergeSort(array) {
+export function mergeSort(array) {
   if (array.length === 0 || array.length === 1) return array;
   else {
     const midpoint = Math.floor(array.length / 2);
@@ -24,7 +24,7 @@ function mergeSort(array) {
 
     const sortedArray = mergeArrays(leftHalfSorted, rightHalfSorted);
 
-    //remove dupes
+    // remove dupes
 
     return sortedArray.filter(
       (number, index) => number !== sortedArray[index + 1]
