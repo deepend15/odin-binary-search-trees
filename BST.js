@@ -48,9 +48,8 @@ class Tree {
   };
 
   insert(value) {
-    if (this.array === null) {
-      this.array = [value];
-      this.root = this.buildTree(this.array);
+    if (this.root === null) {
+      this.root = this.buildTree([value]);
       return;
     }
 
@@ -76,9 +75,88 @@ class Tree {
       }
     }
   }
+
+  delete(value) {
+    if (this.root === null) return;
+
+    function numberOfChildren(node) {
+      if (node.left === null && node.right === null) return 0;
+      if (node.left !== null && node.right !== null) return 2;
+      else return 1;
+    }
+
+    function findNewRoot(node) {
+      if (numberOfChildren(node) === 0) return null;
+
+      if (numberOfChildren(node) === 1) {
+        if (node.left === null) return node.right;
+        else return node.left;
+      }
+    }
+
+    function findSuccessorNodeValue(node) {
+      let successorNode = node.right;
+      while (successorNode.left !== null) {
+        successorNode = successorNode.left;
+      }
+      return successorNode.data;
+    }
+
+    if (this.root.data === value) {
+      if (numberOfChildren(this.root) !== 2) {
+        this.root = findNewRoot(this.root);
+        return;
+      } else {
+        let successorNodeValue = findSuccessorNodeValue(this.root);
+        this.delete(successorNodeValue);
+        this.root.data = successorNodeValue;
+        return;
+      }
+    }
+
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (value < currentNode.data) {
+        if (currentNode.left === null) return;
+        else {
+          if (currentNode.left.data === value) {
+            if (numberOfChildren(currentNode.left) !== 2) {
+              currentNode.left = findNewRoot(currentNode.left);
+              return;
+            } else {
+              let successorNodeValue = findSuccessorNodeValue(currentNode.left);
+              this.delete(successorNodeValue);
+              currentNode.left.data = successorNodeValue;
+              return;
+            }
+          } else currentNode = currentNode.left;
+        }
+      }
+
+      if (value > currentNode.data) {
+        if (currentNode.right === null) return;
+        else {
+          if (currentNode.right.data === value) {
+            if (numberOfChildren(currentNode.right) !== 2) {
+              currentNode.right = findNewRoot(currentNode.right);
+              return;
+            } else {
+              let successorNodeValue = findSuccessorNodeValue(currentNode.right);
+              this.delete(successorNodeValue);
+              currentNode.right.data = successorNodeValue;
+              return;
+            }
+          } else currentNode = currentNode.right;
+        }
+      }
+    }
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.prettyPrint(tree.root);
 tree.insert(6);
+tree.prettyPrint(tree.root);
+tree.delete(8);
+tree.delete(5);
 tree.prettyPrint(tree.root);
