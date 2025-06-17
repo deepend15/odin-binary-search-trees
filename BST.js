@@ -1,9 +1,9 @@
 import { mergeSort } from "./merge-sort.js";
 
 class Tree {
-  constructor(array) {
+  constructor(array = null) {
     this.array = mergeSort(array);
-    this.root = null;
+    this.root = this.buildTree(this.array);
   }
 
   static Node = class {
@@ -15,9 +15,9 @@ class Tree {
   };
 
   buildTree(array) {
-    let midpoint = Math.floor(array.length / 2);
+    if (array === null || array.length === 0) return null;
 
-    if (array.length === 0) return null;
+    let midpoint = Math.floor(array.length / 2);
 
     let root = new Tree.Node(array[midpoint]);
 
@@ -46,11 +46,39 @@ class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
+
+  insert(value) {
+    if (this.array === null) {
+      this.array = [value];
+      this.root = this.buildTree(this.array);
+      return;
+    }
+
+    let currentNode = this.root;
+
+    while (currentNode) {
+      if (value === currentNode.data) return;
+
+      if (value < currentNode.data) {
+        if (currentNode.left === null) {
+          const newNode = new Tree.Node(value);
+          currentNode.left = newNode;
+          return;
+        } else currentNode = currentNode.left;
+      }
+
+      if (value > currentNode.data) {
+        if (currentNode.right === null) {
+          const newNode = new Tree.Node(value);
+          currentNode.right = newNode;
+          return;
+        } else currentNode = currentNode.right;
+      }
+    }
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-const treeArray = tree.array;
-console.log(treeArray);
-let root = tree.buildTree(treeArray);
-console.log(root);
-tree.prettyPrint(root);
+tree.prettyPrint(tree.root);
+tree.insert(6);
+tree.prettyPrint(tree.root);

@@ -1,4 +1,5 @@
 export function mergeSort(array) {
+  if (array === null) return null;
   if (array.length === 0 || array.length === 1) return array;
   else {
     const midpoint = Math.floor(array.length / 2);
