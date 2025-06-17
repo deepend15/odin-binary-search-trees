@@ -16,15 +16,13 @@ class Tree {
 
   buildTree(array) {
     let midpoint = Math.floor(array.length / 2);
-    let start = 0;
-    let end = array.length - 1;
 
     if (array.length === 0) return null;
 
     let root = new Tree.Node(array[midpoint]);
 
-    let leftOfMid = array.slice(start, midpoint);
-    let rightOfMid = array.slice(midpoint + 1, end + 1);
+    let leftOfMid = array.slice(0, midpoint);
+    let rightOfMid = array.slice(midpoint + 1, array.length);
 
     root.left = this.buildTree(leftOfMid);
     root.right = this.buildTree(rightOfMid);
@@ -51,7 +49,8 @@ class Tree {
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(tree.array);
-let root = tree.buildTree(tree.array);
+const treeArray = tree.array;
+console.log(treeArray);
+let root = tree.buildTree(treeArray);
 console.log(root);
 tree.prettyPrint(root);
