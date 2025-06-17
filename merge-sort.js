@@ -1,15 +1,15 @@
-export function mergeSort(array) {
+function mergeSort(array) {
   if (array.length === 0 || array.length === 1) return array;
   else {
-    let midpoint = Math.floor(array.length / 2);
-    let leftHalf = array.slice(0, midpoint);
-    let rightHalf = array.slice(midpoint, array.length);
+    const midpoint = Math.floor(array.length / 2);
+    const leftHalf = array.slice(0, midpoint);
+    const rightHalf = array.slice(midpoint, array.length);
 
-    let leftHalfSorted = mergeSort(leftHalf);
-    let rightHalfSorted = mergeSort(rightHalf);
+    const leftHalfSorted = mergeSort(leftHalf);
+    const rightHalfSorted = mergeSort(rightHalf);
 
     function mergeArrays(arr1, arr2) {
-      let newArray = [];
+      const newArray = [];
 
       while (!(arr1.length === 0 && arr2.length === 0)) {
         if (arr1[0] < arr2[0] || arr1[0] === arr2[0] || arr2[0] === undefined) {
@@ -22,7 +22,7 @@ export function mergeSort(array) {
       return newArray;
     }
 
-    let sortedArray = mergeArrays(leftHalfSorted, rightHalfSorted);
+    const sortedArray = mergeArrays(leftHalfSorted, rightHalfSorted);
 
     //remove dupes
 
