@@ -241,9 +241,45 @@ class Tree {
 
     runCallback(this.root);
   }
+
+  height(value) {
+    const node = this.find(value);
+
+    if (node === null) return null;
+
+    function numberOfChildren(node) {
+      if (node.left === null && node.right === null) return 0;
+      if (node.left !== null && node.right !== null) return 2;
+      else return 1;
+    }
+
+    function findDistanceToLeaf(node, counter = 0) {
+      if (numberOfChildren(node) === 0) {
+        return counter;
+      } else if (numberOfChildren(node) === 1) {
+        counter += 1;
+        if (node.left === null) {
+          return findDistanceToLeaf(node.right, counter);
+        } else return findDistanceToLeaf(node.left, counter);
+      } else {
+        counter += 1;
+        if (
+          findDistanceToLeaf(node.right, counter) >=
+          findDistanceToLeaf(node.left, counter)
+        ) {
+          return findDistanceToLeaf(node.right, counter);
+        } else {
+          return findDistanceToLeaf(node.left, counter);
+        }
+      }
+    }
+
+    return findDistanceToLeaf(node);
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+
 tree.prettyPrint(tree.root);
 
 function printDataValue(node) {
@@ -253,4 +289,4 @@ function printDataValue(node) {
 // tree.levelOrder(printDataValue);
 // tree.inOrder(printDataValue);
 // tree.preOrder(printDataValue);
-tree.postOrder(printDataValue);
+// tree.postOrder(printDataValue);
