@@ -17,12 +17,12 @@ class Tree {
   buildTree(array) {
     if (array === null || array.length === 0) return null;
 
-    let midpoint = Math.floor(array.length / 2);
+    const midpoint = Math.floor(array.length / 2);
 
-    let root = new Tree.Node(array[midpoint]);
+    const root = new Tree.Node(array[midpoint]);
 
-    let leftOfMid = array.slice(0, midpoint);
-    let rightOfMid = array.slice(midpoint + 1, array.length);
+    const leftOfMid = array.slice(0, midpoint);
+    const rightOfMid = array.slice(midpoint + 1, array.length);
 
     root.left = this.buildTree(leftOfMid);
     root.right = this.buildTree(rightOfMid);
@@ -107,7 +107,7 @@ class Tree {
         this.root = findNewRoot(this.root);
         return;
       } else {
-        let successorNodeValue = findSuccessorNodeValue(this.root);
+        const successorNodeValue = findSuccessorNodeValue(this.root);
         this.delete(successorNodeValue);
         this.root.data = successorNodeValue;
         return;
@@ -125,7 +125,7 @@ class Tree {
               currentNode.left = findNewRoot(currentNode.left);
               return;
             } else {
-              let successorNodeValue = findSuccessorNodeValue(currentNode.left);
+              const successorNodeValue = findSuccessorNodeValue(currentNode.left);
               this.delete(successorNodeValue);
               currentNode.left.data = successorNodeValue;
               return;
@@ -142,7 +142,9 @@ class Tree {
               currentNode.right = findNewRoot(currentNode.right);
               return;
             } else {
-              let successorNodeValue = findSuccessorNodeValue(currentNode.right);
+              const successorNodeValue = findSuccessorNodeValue(
+                currentNode.right
+              );
               this.delete(successorNodeValue);
               currentNode.right.data = successorNodeValue;
               return;
@@ -152,11 +154,19 @@ class Tree {
       }
     }
   }
+
+  find(value) {
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      if (currentNode.data === value) break;
+      if (value < currentNode.data) currentNode = currentNode.left;
+      else currentNode = currentNode.right;
+    }
+
+    return currentNode;
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.insert(6);
-tree.prettyPrint(tree.root);
-tree.delete(8);
-tree.delete(5);
 tree.prettyPrint(tree.root);
