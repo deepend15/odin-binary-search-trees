@@ -125,7 +125,9 @@ class Tree {
               currentNode.left = findNewRoot(currentNode.left);
               return;
             } else {
-              const successorNodeValue = findSuccessorNodeValue(currentNode.left);
+              const successorNodeValue = findSuccessorNodeValue(
+                currentNode.left
+              );
               this.delete(successorNodeValue);
               currentNode.left.data = successorNodeValue;
               return;
@@ -166,7 +168,35 @@ class Tree {
 
     return currentNode;
   }
+
+  levelOrder(callback) {
+    if (typeof callback !== "function") {
+      throw new Error(
+        "The levelOrder function requires a callback function as its parameter."
+      );
+    }
+
+    if (this.root === null) return;
+
+    const queue = [];
+
+    queue.push(this.root);
+
+    while (queue.length !== 0) {
+      const firstInQueue = queue[0];
+      callback(firstInQueue);
+      if (firstInQueue.left !== null) queue.push(firstInQueue.left);
+      if (firstInQueue.right !== null) queue.push(firstInQueue.right);
+      queue.shift();
+    }
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 tree.prettyPrint(tree.root);
+
+function printDataValue(node) {
+  console.log(node.data);
+}
+
+tree.levelOrder(printDataValue);
