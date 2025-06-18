@@ -172,7 +172,7 @@ class Tree {
   levelOrder(callback) {
     if (typeof callback !== "function") {
       throw new Error(
-        "The levelOrder function requires a callback function as its parameter."
+        "This function requires a callback function as its parameter."
       );
     }
 
@@ -190,6 +190,57 @@ class Tree {
       queue.shift();
     }
   }
+
+  inOrder(callback) {
+    if (typeof callback !== "function") {
+      throw new Error(
+        "This function requires a callback function as its parameter."
+      );
+    }
+
+    function runCallback(root) {
+      if (root === null) return;
+      runCallback(root.left);
+      callback(root);
+      runCallback(root.right);
+    }
+
+    runCallback(this.root);
+  }
+
+  preOrder(callback) {
+    if (typeof callback !== "function") {
+      throw new Error(
+        "This function requires a callback function as its parameter."
+      );
+    }
+
+    function runCallback(root) {
+      if (root === null) return;
+      callback(root);
+      runCallback(root.left);
+      runCallback(root.right);
+    }
+
+    runCallback(this.root);
+  }
+
+  postOrder(callback) {
+    if (typeof callback !== "function") {
+      throw new Error(
+        "This function requires a callback function as its parameter."
+      );
+    }
+
+    function runCallback(root) {
+      if (root === null) return;
+      runCallback(root.left);
+      runCallback(root.right);
+      callback(root);
+    }
+
+    runCallback(this.root);
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -199,4 +250,7 @@ function printDataValue(node) {
   console.log(node.data);
 }
 
-tree.levelOrder(printDataValue);
+// tree.levelOrder(printDataValue);
+// tree.inOrder(printDataValue);
+// tree.preOrder(printDataValue);
+tree.postOrder(printDataValue);
