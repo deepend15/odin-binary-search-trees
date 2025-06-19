@@ -1,7 +1,7 @@
 import { mergeSort } from "./merge-sort.js";
 import { numberOfChildren } from "./number-of-children.js";
 
-class Tree {
+export class Tree {
   constructor(array = null) {
     this.array = mergeSort(array);
     this.root = this.buildTree(this.array);
@@ -283,6 +283,8 @@ class Tree {
   }
 
   isBalanced() {
+    const tree = this;
+
     function checkIfBalanced(node) {
       if (numberOfChildren(node) === 0) return true;
       else if (numberOfChildren(node) === 1) {
@@ -311,23 +313,10 @@ class Tree {
       newOrderedArray.push(node.data);
     }
 
-    tree.inOrder(addValueToArray);
+    this.inOrder(addValueToArray);
 
-    const newRoot = tree.buildTree(newOrderedArray);
+    const newRoot = this.buildTree(newOrderedArray);
 
     this.root = newRoot;
   }
 }
-
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-
-tree.prettyPrint(tree.root);
-
-// function printDataValue(node) {
-//   console.log(node.data);
-// }
-
-// tree.levelOrder(printDataValue);
-// tree.inOrder(printDataValue);
-// tree.preOrder(printDataValue);
-// tree.postOrder(printDataValue);
