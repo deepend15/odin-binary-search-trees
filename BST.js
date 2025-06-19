@@ -281,6 +281,28 @@ class Tree {
     if (currentNode === null) return null;
     else return counter;
   }
+
+  isBalanced() {
+    function checkIfBalanced(node) {
+      if (numberOfChildren(node) === 0) return true;
+      else if (numberOfChildren(node) === 1) {
+        if (tree.height(node.data) === 1) return true;
+        else return false;
+      } else {
+        const leftValue = node.left.data;
+        const rightValue = node.right.data;
+        if (
+          -1 <= tree.height(leftValue) - tree.height(rightValue) <= 1 &&
+          checkIfBalanced(node.left) &&
+          checkIfBalanced(node.right)
+        ) {
+          return true;
+        } else return false; 
+      }
+    }
+
+    return checkIfBalanced(this.root);
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
