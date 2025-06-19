@@ -276,15 +276,31 @@ class Tree {
 
     return findDistanceToLeaf(node);
   }
+
+  depth(value) {
+    let counter = 0;
+    let currentNode = this.root;
+
+    while (currentNode !== null) {
+      if (currentNode.data === value) break;
+      counter += 1;
+      if (value < currentNode.data) {
+        currentNode = currentNode.left;
+      } else currentNode = currentNode.right;
+    }
+
+    if (currentNode === null) return null;
+    else return counter;
+  }
 }
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 tree.prettyPrint(tree.root);
 
-function printDataValue(node) {
-  console.log(node.data);
-}
+// function printDataValue(node) {
+//   console.log(node.data);
+// }
 
 // tree.levelOrder(printDataValue);
 // tree.inOrder(printDataValue);
