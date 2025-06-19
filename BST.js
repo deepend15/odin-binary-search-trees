@@ -1,4 +1,5 @@
 import { mergeSort } from "./merge-sort.js";
+import { numberOfChildren } from "./number-of-children.js";
 
 class Tree {
   constructor(array = null) {
@@ -78,12 +79,6 @@ class Tree {
 
   delete(value) {
     if (this.root === null) return;
-
-    function numberOfChildren(node) {
-      if (node.left === null && node.right === null) return 0;
-      if (node.left !== null && node.right !== null) return 2;
-      else return 1;
-    }
 
     function findNewRoot(node) {
       if (numberOfChildren(node) === 0) return null;
@@ -246,12 +241,6 @@ class Tree {
     const node = this.find(value);
 
     if (node === null) return null;
-
-    function numberOfChildren(node) {
-      if (node.left === null && node.right === null) return 0;
-      if (node.left !== null && node.right !== null) return 2;
-      else return 1;
-    }
 
     function findDistanceToLeaf(node, counter = 0) {
       if (numberOfChildren(node) === 0) {
