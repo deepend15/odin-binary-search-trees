@@ -297,11 +297,25 @@ class Tree {
           checkIfBalanced(node.right)
         ) {
           return true;
-        } else return false; 
+        } else return false;
       }
     }
 
     return checkIfBalanced(this.root);
+  }
+
+  rebalance() {
+    const newOrderedArray = [];
+
+    function addValueToArray(node) {
+      newOrderedArray.push(node.data);
+    }
+
+    tree.inOrder(addValueToArray);
+
+    const newRoot = tree.buildTree(newOrderedArray);
+
+    this.root = newRoot;
   }
 }
 
